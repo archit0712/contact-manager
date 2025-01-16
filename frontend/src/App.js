@@ -3,12 +3,15 @@ import  {useState, useEffect, useMemo} from 'react';
 import { getContacts, addContact,deleteContact } from './apis/contact';
 import './App.css';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import { Box, Button, TextField, Typography, Paper, MenuItem } from "@mui/material";
+import { Box, Typography,  MenuItem } from "@mui/material";
 import { AddContactForm } from './components/addContactForm';
 
 function App() {
+
   const [contacts, setContacts] = useState([]);
   const [newContact, setNewContact] = useState({ name: '', email: '' }); // State for new contact
+
+  // Fetch contacts on initial render
   useEffect(()=>{
     const fetchContacts = async () =>{
       const contacts = await getContacts();
@@ -17,6 +20,7 @@ function App() {
     fetchContacts();
   },[])
 
+  // function to delete a contact based on id
   const handleDeleteContact = async (contact) => {
      if(!contact){
       alert("No contact selected!");
@@ -31,24 +35,26 @@ function App() {
   }
 
 
+  // Define the columns
   const columns = useMemo(
     () => [
       {
-        accessorKey: "name", //simple recommended way to define a column
+        accessorKey: "name", 
         header: "Name",
-        muiTableHeadCellProps: { sx: { color: "green" } }, //custom props
-        Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong> //optional custom cell render
+        muiTableHeadCellProps: { sx: { color: "green" } }, 
+        Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong> 
       },
       {
-        accessorFn: (row) => row.email, //alternate way
-        id: "email", //id required if you use accessorFn instead of accessorKey
+        accessorFn: (row) => row.email, 
+        id: "email", 
         header: "Email",
-        Header: <i style={{ color: "red" }}>Email</i> //optional custom markup
+        Header: <i style={{ color: "red" }}>Email</i> 
       },
     ],
     []
   );
 
+  // Define the table
   const table = useMaterialReactTable({
     columns,
     data: contacts,
