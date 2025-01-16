@@ -41,23 +41,34 @@ FIREBASE_UNIVERSE_DOMAIN=googleapis.com
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/firebase-contacts-api.git
-   cd firebase-contacts-api
+   git clone https://github.com/your-repo/contacts-manager.git
+   cd contacts-manager
    ```
-
-2. Install dependencies:
+2. Install backend dependencies:
    ```bash
+   cd backend
    npm install
    ```
 
-3. Add Firebase Admin SDK credentials:
+3. Install frontend dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+4. Add Firebase Admin SDK credentials:
    Place your Firebase Admin SDK JSON configuration in the root directory or use the `.env` file to configure credentials dynamically as shown in the code.
 
-4. Start the server:
+5. Start the server:
+   ```bash
+   npm run dev
+   ```
+   The server will run on the port specified in the `.env` file or default to `3000`.
+
+6. Start the frontend:
    ```bash
    npm start
    ```
-   The server will run on the port specified in the `.env` file or default to `3000`.
 
 ---
 
@@ -146,6 +157,3 @@ http://localhost:3000/api/contacts
 To be implemented in the next iteration.
 
 ---
-
-## License
-This project is licensed under the MIT License. Feel free to use and modify it as per your needs.
