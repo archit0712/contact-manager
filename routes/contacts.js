@@ -44,6 +44,7 @@ router.post('/add', async (req, res) => {
     }
 })
 
+// Delete a contact
 router.delete('/delete/:id', async (req, res) => {
     const { id } = req.params;
     try {
