@@ -58,7 +58,7 @@ FIREBASE_UNIVERSE_DOMAIN=googleapis.com
 
 4. Start the server:
    ```bash
-   npm start
+   npm run dev
    ```
    The server will run on the port specified in the `.env` file or default to `3000`.
 
