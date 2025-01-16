@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import react, {useState, useEffect, useMemo} from 'react';
-import { getContacts, addContact } from './apis/contact';
+import { getContacts, addContact,deleteContact } from './apis/contact';
 import './App.css';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import { Box, Button, TextField, Typography, Paper, MenuItem } from "@mui/material";
@@ -18,7 +18,16 @@ function App() {
   },[])
 
   const handleDeleteContact = async (contact) => {
-    console.log("contact",contact);
+     if(!contact){
+      alert("No contact selected!");
+      return;
+     }
+     try {
+       await deleteContact(contact.id);
+       setContacts((prevContacts) => prevContacts.filter((c) => c.id !== contact.id));
+     } catch (error) {
+       alert("Failed to delete contact: " + error.response.data.message);
+     }
   }
 
   const handleAddContact = async () => {
