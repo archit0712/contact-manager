@@ -3,7 +3,7 @@ import react, {useState, useEffect, useMemo} from 'react';
 import { getContacts, addContact } from './apis/contact';
 import './App.css';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import { Box, Button, TextField, Typography, Paper } from "@mui/material";
+import { Box, Button, TextField, Typography, Paper, MenuItem } from "@mui/material";
 
 
 function App() {
@@ -16,6 +16,10 @@ function App() {
     }
     fetchContacts();
   },[])
+
+  const handleDeleteContact = async (contact) => {
+    console.log("contact",contact);
+  }
 
   const handleAddContact = async () => {
     if (!newContact.name || !newContact.email) {
@@ -47,7 +51,7 @@ function App() {
         id: "email", //id required if you use accessorFn instead of accessorKey
         header: "Email",
         Header: <i style={{ color: "red" }}>Email</i> //optional custom markup
-      }
+      },
     ],
     []
   );
@@ -55,6 +59,10 @@ function App() {
   const table = useMaterialReactTable({
     columns,
     data: contacts,
+    enableRowActions: true,
+    renderRowActionMenuItems: ({row}) => [
+      <MenuItem  key="delete" onClick={() => handleDeleteContact(row.original)}> Delete </MenuItem>
+    ],
     options: {
       search: true,
       pagination: true,
@@ -109,6 +117,7 @@ function App() {
               label="Email"
               variant="outlined"
               value={newContact.email}
+              type='email'
               onChange={(e) =>
                 setNewContact((prev) => ({ ...prev, email: e.target.value }))
               }
