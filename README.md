@@ -206,9 +206,20 @@ http://localhost:3000/api/contacts
 4. **State Management:**
    - Local state (`useState`) is used for simplicity, avoiding additional complexity from global state management tools.
 
+### Library Choices
+
+1. **Material-UI:**
+   - Provides a robust set of components for building a modern and responsive UI.
+   - The MaterialReactTable library was specifically chosen for its support for advanced table functionalities like pagination, sorting, and search, which streamline data management.
+   - The general search feature in MaterialReactTable allows users to filter contacts efficiently, enhancing usability without additional custom implementation.
+
+2. **React:**
+   - React was used for its modular architecture and ability to manage complex states effectively through hooks like `useState` and `useEffect`.
+
 ### Trade-offs
 - **Error Handling:** Currently basic; can be expanded to include detailed user feedback.
 - **Scalability:** Frontend and backend could use authentication for secure operations.
+
 
 ---
 
@@ -216,13 +227,3 @@ http://localhost:3000/api/contacts
 - Implement update functionality for contacts.
 - Add pagination for retrieving large datasets in the backend.
 - Integrate authentication for secure access to endpoints.
-
----
-
-## Running Tests
-To be implemented in the next iteration.
-
----
-
-## License
-This project is licensed under the MIT License. Feel free to use and modify it as per your needs.
