@@ -4,7 +4,7 @@ import { getContacts, addContact,deleteContact } from './apis/contact';
 import './App.css';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import { Box, Button, TextField, Typography, Paper, MenuItem } from "@mui/material";
-
+import { AddContactForm } from './components/addContactForm';
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -30,22 +30,6 @@ function App() {
      }
   }
 
-  const handleAddContact = async () => {
-    if (!newContact.name || !newContact.email) {
-      alert("Both name and email are required!");
-      return;
-    }
-
-    try {
-      console.log("data",newContact);
-      const addedContact = await addContact(newContact);
-      setContacts((prevContacts) => [...prevContacts, addedContact]);
-      setNewContact({ name: "", email: "" }); // Reset form
-    } catch (error) {
-      console.log("error",error);
-      alert("Failed to add contact: " + error.response.data.message);
-    }
-  };
 
   const columns = useMemo(
     () => [
@@ -85,7 +69,6 @@ function App() {
       <Typography variant="h4" component="h1" gutterBottom>
         Contact Manager
       </Typography>
-
       {/* Layout: Form on the Left, Table on the Right */}
       <Box
         sx={{
@@ -95,53 +78,7 @@ function App() {
         }}
       >
         {/* Add Contact Form */}
-        <Paper
-          elevation={3}
-          sx={{
-            padding: 3,
-            width: "300px",
-          }}
-        >
-          <Typography variant="h6" component="h2" gutterBottom>
-            Add New Contact
-          </Typography>
-          <Box
-            component="form"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-            }}
-          >
-            <TextField
-              label="Name"
-              variant="outlined"
-              value={newContact.name}
-              onChange={(e) =>
-                setNewContact((prev) => ({ ...prev, name: e.target.value }))
-              }
-              fullWidth
-            />
-            <TextField
-              label="Email"
-              variant="outlined"
-              value={newContact.email}
-              type='email'
-              onChange={(e) =>
-                setNewContact((prev) => ({ ...prev, email: e.target.value }))
-              }
-              fullWidth
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleAddContact}
-            >
-              Add Contact
-            </Button>
-          </Box>
-        </Paper>
-
+        <AddContactForm contacts={contacts} setContacts={setContacts} newContact={newContact} setNewContact={setNewContact} addContact={addContact} />
         {/* Table */}
         <Box
           sx={{
