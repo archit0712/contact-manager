@@ -1,12 +1,15 @@
-# Contacts  Manager API
+# Contacts Management
 
 ## Description
 This project is a Node.js-based REST API that enables CRUD operations for managing contacts using Firebase Firestore as the database. The API is built using Express.js, and it provides endpoints to retrieve, add, and delete contacts. It utilizes Firebase Admin SDK for database interactions and has environment-based configuration for secure key management.
+
+A React frontend is used for managing contacts, featuring a Material-UI-based table and form interface to add, delete, and display contacts.
 
 ## Features
 - Retrieve all contacts
 - Add a new contact (with validation to prevent duplicates)
 - Delete a contact by ID
+- Interactive React frontend with Material UI for managing contacts
 
 ---
 
@@ -37,38 +40,70 @@ FIREBASE_CLIENT_X509_CERT_URL=your-client-x509-cert-url
 FIREBASE_UNIVERSE_DOMAIN=googleapis.com
 ```
 
-### Installation
+### Backend Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/contacts-manager.git
-   cd contacts-manager
+   git clone https://github.com/your-repo/contact-manager.git
+   cd contact-manager
    ```
+
 2. Install backend dependencies:
    ```bash
-   cd backend
    npm install
    ```
 
-3. Install frontend dependencies:
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-4. Add Firebase Admin SDK credentials:
+3. Add Firebase Admin SDK credentials:
    Place your Firebase Admin SDK JSON configuration in the root directory or use the `.env` file to configure credentials dynamically as shown in the code.
 
-5. Start the server:
-   ```bash
-   npm run dev
-   ```
-   The server will run on the port specified in the `.env` file or default to `3000`.
-
-6. Start the frontend:
+4. Start the server:
    ```bash
    npm start
    ```
+   The server will run on the port specified in the `.env` file or default to `3000`.
+
+### Frontend Installation
+
+1. Navigate to the `frontend` folder:
+   ```bash
+   cd frontend
+   ```
+
+2. Install frontend dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the React app:
+   ```bash
+   npm start
+   ```
+
+   The app will run on `http://localhost:3000` (or the next available port if the backend is running).
+
+---
+
+## Folder Structure
+```
+contact-manager/
+├── backend/
+│   ├── routes/
+│   │   └── contacts.js          # Express route handlers for API endpoints
+│   ├── .env                     # Environment variables for Firebase 
+│   ├── server.js                # Main server file
+│   └── package.json             # Backend dependencies and scripts
+├── frontend/
+│   ├── src/
+│   │   ├── apis/
+│   │   │   └── contact.js       # API functions for fetching and managing 
+│   │   ├── components/
+│   │   │   └── AddContactForm.js # Form component for adding contacts
+│   │   ├── App.js               # Main React component
+│   │   ├── App.css              # Styles for the app
+│   │   └── index.js             # React entry point
+│   ├── package.json             # Frontend dependencies and scripts
+├── README.md                    # Documentation
+```
 
 ---
 
@@ -125,30 +160,61 @@ http://localhost:3000/api/contacts
 
 ---
 
+## Frontend Logic
+
+### Main Components
+
+1. **App.js**
+   - Manages state for `contacts` and `newContact`.
+   - Fetches contacts using `getContacts` from `contact.js`.
+   - Passes state and handlers to child components like `AddContactForm`.
+
+2. **AddContactForm.js**
+   - Displays a form to input a new contact.
+   - Validates form fields before sending the contact to the backend using `addContact`.
+   - Updates the `contacts` state upon successful addition.
+
+3. **MaterialReactTable**
+   - Displays contacts in a table with pagination and search.
+   - Provides delete functionality using a row action menu.
+
+### Key API Functions
+
+1. **getContacts**
+   - Fetches all contacts from the backend.
+
+2. **addContact**
+   - Sends a POST request to add a new contact.
+
+3. **deleteContact**
+   - Sends a DELETE request to remove a contact by ID.
+
+---
+
 ## Design Approach
 
 ### Key Design Decisions
-1. **Firebase Integration:**
-   - Firebase Admin SDK is used for Firestore operations, ensuring secure and efficient database interactions.
-   - Dynamic credential configuration via environment variables for improved security.
+1. **Frontend and Backend Separation:**
+   - Backend serves as the API, while the frontend manages user interaction.
 
-2. **Middleware for Database Access:**
-   - A custom middleware injects the Firestore `db` instance into each request for easy access in route handlers.
+2. **Reusable Components:**
+   - Modularized the form and table components for easier maintenance and scalability.
 
-3. **Validation:**
-   - API validates input data for required fields (`name` and `email`) before processing requests.
-   - Duplicate checks are performed when adding new contacts.
+3. **Material-UI Integration:**
+   - Used Material-UI components for a polished and responsive UI.
+
+4. **State Management:**
+   - Local state (`useState`) is used for simplicity, avoiding additional complexity from global state management tools.
 
 ### Trade-offs
-- **Realtime Features:** Chose Firestore for simplicity over alternatives like Firebase Realtime Database since Firestore offers structured queries and better scalability.
-- **Error Handling:** Basic error responses are implemented; could be extended with more detailed error codes and messages.
+- **Error Handling:** Currently basic; can be expanded to include detailed user feedback.
+- **Scalability:** Frontend and backend could use authentication for secure operations.
 
 ---
 
 ## Future Enhancements
 - Implement update functionality for contacts.
-- Add pagination for retrieving large datasets.
-- Improve error handling and logging for better debugging.
+- Add pagination for retrieving large datasets in the backend.
 - Integrate authentication for secure access to endpoints.
 
 ---
@@ -157,3 +223,6 @@ http://localhost:3000/api/contacts
 To be implemented in the next iteration.
 
 ---
+
+## License
+This project is licensed under the MIT License. Feel free to use and modify it as per your needs.
