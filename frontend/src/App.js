@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import react, {useState, useEffect, useMemo} from 'react';
+
+import  {useState, useEffect, useMemo} from 'react';
 import { getContacts, addContact,deleteContact } from './apis/contact';
 import './App.css';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
